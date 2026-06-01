@@ -1,0 +1,190 @@
+interactions:
+- request:
+    body: '{"filename": "aiand-vcr-upload.png", "purpose": "vision", "bytes": 68,
+      "mime_type": "image/png"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - OpenAPI-Generator/0.1.0/python
+      authorization:
+      - Bearer <AIAND_API_KEY>
+    method: POST
+    uri: https://api.aiand.com/v1/uploads
+  response:
+    body:
+      string: '{"id":"upload-a3ae5333249c49deb4dd64b8d92b642d","object":"upload","bytes":68,"created_at":1779463596,"expires_at":1779467195,"filename":"aiand-vcr-upload.png","purpose":"vision","status":"pending","file":null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      CF-RAY:
+      - <filtered>
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '209'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 22 May 2026 15:26:36 GMT
+      Nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      Report-To:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=XaY44o30odOOuGMjyxVlFcm7FtzC9wqnJCP5nLzLTVsDnMl02SuLmGgg0j4XKC1HWMtdKn83YEVAxjcgQV7iwXC0TWBqWrA9tBCe8Eoq7ei3MUHcM7sG7%2BnBCVFlHGWN"}]}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=2592000
+      Vary:
+      - Origin, Origin
+      alt-svc:
+      - h3=":443"; ma=86400
+      x-request-id:
+      - <filtered>
+    status:
+      code: 200
+      message: OK
+- request:
+    body: !!binary |
+      LS1jZDFkNjY0ZTk3OTJiMzhlODQ1ZjRlNGIxM2U5NjU5NQ0KQ29udGVudC1EaXNwb3NpdGlvbjog
+      Zm9ybS1kYXRhOyBuYW1lPSJkYXRhIjsgZmlsZW5hbWU9ImFpYW5kLXZjci11cGxvYWQtcGFydC5w
+      bmciDQpDb250ZW50LVR5cGU6IGltYWdlL3BuZw0KDQqJUE5HDQoaCgAAAA1JSERSAAAAAQAAAAEI
+      BAAAALUcDAIAAAALSURBVHjaY/z/HwADAwIA77+n2wAAAABJRU5ErkJggg0KLS1jZDFkNjY0ZTk3
+      OTJiMzhlODQ1ZjRlNGIxM2U5NjU5NS0tDQo=
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - multipart/form-data; boundary=cd1d664e9792b38e845f4e4b13e96595
+      User-Agent:
+      - OpenAPI-Generator/0.1.0/python
+      authorization:
+      - Bearer <AIAND_API_KEY>
+    method: POST
+    uri: https://api.aiand.com/v1/uploads/upload-a3ae5333249c49deb4dd64b8d92b642d/parts
+  response:
+    body:
+      string: '{"id":"part-faa60b3a1bb4453fbe64e92b0572c84b","object":"upload.part","upload_id":"upload-a3ae5333249c49deb4dd64b8d92b642d","created_at":1779463598}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      CF-RAY:
+      - <filtered>
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 22 May 2026 15:26:38 GMT
+      Nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      Report-To:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=QQq6onVSFDJnpoXOlLOmEX27PcL%2BM8HUQVgscuQcUJa09a%2BK2GXnTrCodItzlrUVq9aMXnl2AteNbZcRLUTR34AJ4n0bUyDTmfZUHun6xG9zu2f6HrLsrvRL8aYKlocR"}]}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=2592000
+      Vary:
+      - Origin
+      alt-svc:
+      - h3=":443"; ma=86400
+      x-request-id:
+      - <filtered>
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"part_ids": ["part-faa60b3a1bb4453fbe64e92b0572c84b"]}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - OpenAPI-Generator/0.1.0/python
+      authorization:
+      - Bearer <AIAND_API_KEY>
+    method: POST
+    uri: https://api.aiand.com/v1/uploads/upload-a3ae5333249c49deb4dd64b8d92b642d/complete
+  response:
+    body:
+      string: '{"id":"upload-a3ae5333249c49deb4dd64b8d92b642d","object":"upload","bytes":68,"created_at":1779463595,"expires_at":1779467195,"filename":"aiand-vcr-upload.png","purpose":"vision","status":"completed","file":{"id":"file-0ba32d644bb347baabed2426fcba3bea","object":"file","bytes":68,"created_at":1779463600,"expires_at":1782055600,"filename":"aiand-vcr-upload.png","purpose":"vision"}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      CF-RAY:
+      - <filtered>
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '381'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 22 May 2026 15:26:41 GMT
+      Nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      Report-To:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=0BhVv5lGgecixhVARI9%2BOXVqKu0PASCY41UT%2Fs50IG29hhCvvZGw37VHMDFEfVtChpViHJ9%2Fsni4yajDRvAVLIVby15azDZuRH3s0Ldi6QIUIYDHydmxSVM7pDtY2v0g"}]}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=2592000
+      Vary:
+      - Origin
+      alt-svc:
+      - h3=":443"; ma=86400
+      x-request-id:
+      - <filtered>
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAPI-Generator/0.1.0/python
+      authorization:
+      - Bearer <AIAND_API_KEY>
+    method: DELETE
+    uri: https://api.aiand.com/v1/files/file-0ba32d644bb347baabed2426fcba3bea
+  response:
+    body:
+      string: '{"id":"file-0ba32d644bb347baabed2426fcba3bea","object":"file","deleted":true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      CF-RAY:
+      - <filtered>
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '77'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 22 May 2026 15:26:42 GMT
+      Nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      Report-To:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=xHX4pI%2FpXOzhPQ08pMhxVAZlRvhGJK1lbKSO4L1cxvJ0%2B%2Fy%2FeyabMArRzvecPCQhRsjNlM3zc8A2wR1jyEvevRYCpon2uctVECk4XkEwO8vXcDHH03LydmLonNf0w4xq"}]}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=2592000
+      Vary:
+      - Origin
+      alt-svc:
+      - h3=":443"; ma=86400
+      x-request-id:
+      - <filtered>
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,93 @@
+interactions:
+- request:
+    body: '{"filename": "aiand-vcr-cancel.pdf", "purpose": "document", "bytes": 77,
+      "mime_type": "application/pdf"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - OpenAPI-Generator/0.1.0/python
+      authorization:
+      - Bearer <AIAND_API_KEY>
+    method: POST
+    uri: https://api.aiand.com/v1/uploads
+  response:
+    body:
+      string: '{"id":"upload-c80678fe69ef4e3796a7512b1c763bed","object":"upload","bytes":77,"created_at":1779463507,"expires_at":1779467106,"filename":"aiand-vcr-cancel.pdf","purpose":"document","status":"pending","file":null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      CF-RAY:
+      - <filtered>
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '211'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 22 May 2026 15:25:07 GMT
+      Nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      Report-To:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=%2B4tgLUCU7av0NwmL34sFjir36TJr40Z8k8jIUQ%2Ba%2FCbemBfeP59toDb1VY4GixCMU%2F5SqnLwBO8dATsCo2c7J75oRngLCJ6XduUP%2Bvge8Zo4soI1gBs%2FoodBIeIWiz0w"}]}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=2592000
+      Vary:
+      - Origin, Origin
+      alt-svc:
+      - h3=":443"; ma=86400
+      x-request-id:
+      - <filtered>
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - OpenAPI-Generator/0.1.0/python
+      authorization:
+      - Bearer <AIAND_API_KEY>
+    method: POST
+    uri: https://api.aiand.com/v1/uploads/upload-c80678fe69ef4e3796a7512b1c763bed/cancel
+  response:
+    body:
+      string: '{"id":"upload-c80678fe69ef4e3796a7512b1c763bed","object":"upload","bytes":77,"created_at":1779463507,"expires_at":1779467106,"filename":"aiand-vcr-cancel.pdf","purpose":"document","status":"cancelled","file":null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      CF-RAY:
+      - <filtered>
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '213'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 22 May 2026 15:25:09 GMT
+      Nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      Report-To:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=4BzgPvh3HHkETBnRprfgWFWmFnHWyt7uT%2BKNVCK6wrFQFRw0zMBGXmiX%2Bx%2BJD8%2Ficuw0BMhqA2TFFG1QW%2B0yrcN6GwuYAfU%2BHXvg8uM2iMPTVBUwqt5ESKSsFY9YX7r8"}]}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=2592000
+      Vary:
+      - Origin
+      alt-svc:
+      - h3=":443"; ma=86400
+      x-request-id:
+      - <filtered>
+    status:
+      code: 200
+      message: OK
+version: 1

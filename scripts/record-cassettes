@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+if [[ -f "$ROOT_DIR/.env.test" ]]; then
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%$'\r'}"
+    case "$line" in
+      AIAND_API_KEY=*)
+        AIAND_API_KEY="${line#AIAND_API_KEY=}"
+        export AIAND_API_KEY
+        ;;
+    esac
+  done < "$ROOT_DIR/.env.test"
+fi
+
+: "${AIAND_API_KEY:?Put AIAND_API_KEY in $ROOT_DIR/.env.test before recording cassettes.}"
+
+cd "$ROOT_DIR"
+export AIAND_VCR_RECORD_MODE=once
+uv run --extra test pytest tests/test_openai_api_vcr.py

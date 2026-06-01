@@ -1,0 +1,5 @@
+packageName: aiand
+projectName: aiand
+packageVersion: 0.1.0
+packageUrl: https://github.com/aiandlabs/aiand-python
+disallowAdditionalPropertiesIfNotPresent: false
