@@ -17,48 +17,30 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from aiand.models.file_object import FileObject
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class UploadObject(BaseModel):
+class CreateResponseResponseOutputInnerAnyOf1(BaseModel):
     """
-    UploadObject
+    CreateResponseResponseOutputInnerAnyOf1
     """ # noqa: E501
-    id: StrictStr = Field(description="Stable upload session id with `upload-` prefix")
-    object: StrictStr
-    bytes: StrictInt = Field(description="Declared total size of the file being uploaded")
-    created_at: StrictInt = Field(description="Unix timestamp")
-    expires_at: StrictInt = Field(description="Unix timestamp (1 hour from creation by default)")
-    filename: Optional[StrictStr]
-    purpose: StrictStr
-    status: StrictStr
-    file: Optional[FileObject] = Field(description="Populated once status is `completed`")
+    id: StrictStr
+    type: StrictStr
+    call_id: StrictStr
+    name: StrictStr
+    arguments: StrictStr
+    status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "object", "bytes", "created_at", "expires_at", "filename", "purpose", "status", "file"]
+    __properties: ClassVar[List[str]] = ["id", "type", "call_id", "name", "arguments", "status"]
 
-    @field_validator('object')
-    def object_validate_enum(cls, value):
+    @field_validator('type')
+    def type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['upload']):
-            raise ValueError("must be one of enum values ('upload')")
-        return value
-
-    @field_validator('purpose')
-    def purpose_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['vision', 'video', 'audio', 'document']):
-            raise ValueError("must be one of enum values ('vision', 'video', 'audio', 'document')")
-        return value
-
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['pending', 'completed', 'cancelled', 'expired']):
-            raise ValueError("must be one of enum values ('pending', 'completed', 'cancelled', 'expired')")
+        if value not in set(['function_call']):
+            raise ValueError("must be one of enum values ('function_call')")
         return value
 
     model_config = ConfigDict(
@@ -79,7 +61,7 @@ class UploadObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of UploadObject from a JSON string"""
+        """Create an instance of CreateResponseResponseOutputInnerAnyOf1 from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -102,29 +84,16 @@ class UploadObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of file
-        if self.file:
-            _dict['file'] = self.file.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
-        # set to None if filename (nullable) is None
-        # and model_fields_set contains the field
-        if self.filename is None and "filename" in self.model_fields_set:
-            _dict['filename'] = None
-
-        # set to None if file (nullable) is None
-        # and model_fields_set contains the field
-        if self.file is None and "file" in self.model_fields_set:
-            _dict['file'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of UploadObject from a dict"""
+        """Create an instance of CreateResponseResponseOutputInnerAnyOf1 from a dict"""
         if obj is None:
             return None
 
@@ -133,14 +102,11 @@ class UploadObject(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "object": obj.get("object"),
-            "bytes": obj.get("bytes"),
-            "created_at": obj.get("created_at"),
-            "expires_at": obj.get("expires_at"),
-            "filename": obj.get("filename"),
-            "purpose": obj.get("purpose"),
-            "status": obj.get("status"),
-            "file": FileObject.from_dict(obj["file"]) if obj.get("file") is not None else None
+            "type": obj.get("type"),
+            "call_id": obj.get("call_id"),
+            "name": obj.get("name"),
+            "arguments": obj.get("arguments"),
+            "status": obj.get("status")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

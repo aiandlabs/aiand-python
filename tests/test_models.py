@@ -19,20 +19,23 @@ def test_chat_completion_request_serializes_docs_style_messages() -> None:
     assert request.to_dict()["model"] == "openai/gpt-oss-120b"
 
 
-def test_model_response_accepts_string_pricing_and_extra_metadata() -> None:
+def test_model_response_accepts_string_pricing_and_typed_metadata() -> None:
     response = aiand.ListModels200Response.from_dict(
         {
             "object": "list",
             "data": [
                 {
                     "id": "openai/gpt-oss-120b",
+                    "name": "OpenAI GPT OSS 120B",
                     "object": "model",
                     "created": 1775474514,
-                    "owned_by": "ai&",
+                    "owned_by": "partner-lab",
+                    "provider": "openai",
+                    "context_window": 131072,
+                    "capabilities": ["reasoning", "tool_calling"],
+                    "description": "OpenAI GPT OSS 120B",
                     "input_per_1m": "0.150000",
                     "output_per_1m": "0.600000",
-                    "context_window": 131072,
-                    "capabilities": ["reasoning", "tools"],
                 }
             ],
         }
@@ -40,10 +43,14 @@ def test_model_response_accepts_string_pricing_and_extra_metadata() -> None:
 
     model = response.data[0]
 
+    assert model.name == "OpenAI GPT OSS 120B"
+    assert model.owned_by == "partner-lab"
+    assert model.provider == "openai"
+    assert model.context_window == 131072
+    assert model.capabilities == ["reasoning", "tool_calling"]
+    assert model.description == "OpenAI GPT OSS 120B"
     assert model.input_per_1m == "0.150000"
     assert model.output_per_1m == "0.600000"
-    assert model.to_dict()["context_window"] == 131072
-    assert model.to_dict()["capabilities"] == ["reasoning", "tools"]
 
 
 def test_upload_purpose_accepts_document_from_docs() -> None:
@@ -57,6 +64,20 @@ def test_upload_purpose_accepts_document_from_docs() -> None:
     )
 
     assert request.purpose == "document"
+
+
+def test_response_request_constructor_omits_unset_nullable_fields() -> None:
+    request = aiand.CreateResponseRequest(
+        model="openai/gpt-oss-120b",
+        input=aiand.ResponseInput("Say hello in one sentence."),
+        max_output_tokens=8,
+    )
+
+    body = request.to_dict()
+
+    assert body["input"] == "Say hello in one sentence."
+    assert "parallel_tool_calls" not in body
+    assert "truncation" not in body
 
 
 def test_upload_purpose_rejects_unknown_values() -> None:

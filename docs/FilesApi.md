@@ -365,7 +365,7 @@ with aiand.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = aiand.FilesApi(api_client)
     file = None # bytes | The asset bytes (multipart/form-data field)
-    purpose = 'purpose_example' # str | One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type. (optional)
+    purpose = 'purpose_example' # str | One of `vision`, `video`, `audio`, or `document`. Determines size + mime limits and which models can reference the file. Optional — if omitted, inferred from the file's MIME type. (optional)
 
     try:
         # Upload a file
@@ -384,7 +384,7 @@ with aiand.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **file** | **bytes**| The asset bytes (multipart/form-data field) | 
- **purpose** | **str**| One of &#x60;vision&#x60;, &#x60;video&#x60;, &#x60;audio&#x60;, or &#x60;document&#x60;. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type. | [optional] 
+ **purpose** | **str**| One of &#x60;vision&#x60;, &#x60;video&#x60;, &#x60;audio&#x60;, or &#x60;document&#x60;. Determines size + mime limits and which models can reference the file. Optional — if omitted, inferred from the file&#39;s MIME type. | [optional] 
 
 ### Return type
 

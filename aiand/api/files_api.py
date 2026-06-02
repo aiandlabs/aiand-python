@@ -1101,7 +1101,7 @@ class FilesApi:
     def upload_file(
         self,
         file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The asset bytes (multipart/form-data field)")],
-        purpose: Annotated[Optional[StrictStr], Field(description="One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type.")] = None,
+        purpose: Annotated[Optional[StrictStr], Field(description="One of `vision`, `video`, `audio`, or `document`. Determines size + mime limits and which models can reference the file. Optional — if omitted, inferred from the file's MIME type.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1121,7 +1121,7 @@ class FilesApi:
 
         :param file: The asset bytes (multipart/form-data field) (required)
         :type file: bytes
-        :param purpose: One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type.
+        :param purpose: One of `vision`, `video`, `audio`, or `document`. Determines size + mime limits and which models can reference the file. Optional — if omitted, inferred from the file's MIME type.
         :type purpose: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1176,7 +1176,7 @@ class FilesApi:
     def upload_file_with_http_info(
         self,
         file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The asset bytes (multipart/form-data field)")],
-        purpose: Annotated[Optional[StrictStr], Field(description="One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type.")] = None,
+        purpose: Annotated[Optional[StrictStr], Field(description="One of `vision`, `video`, `audio`, or `document`. Determines size + mime limits and which models can reference the file. Optional — if omitted, inferred from the file's MIME type.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1196,7 +1196,7 @@ class FilesApi:
 
         :param file: The asset bytes (multipart/form-data field) (required)
         :type file: bytes
-        :param purpose: One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type.
+        :param purpose: One of `vision`, `video`, `audio`, or `document`. Determines size + mime limits and which models can reference the file. Optional — if omitted, inferred from the file's MIME type.
         :type purpose: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1251,7 +1251,7 @@ class FilesApi:
     def upload_file_without_preload_content(
         self,
         file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="The asset bytes (multipart/form-data field)")],
-        purpose: Annotated[Optional[StrictStr], Field(description="One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type.")] = None,
+        purpose: Annotated[Optional[StrictStr], Field(description="One of `vision`, `video`, `audio`, or `document`. Determines size + mime limits and which models can reference the file. Optional — if omitted, inferred from the file's MIME type.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1271,7 +1271,7 @@ class FilesApi:
 
         :param file: The asset bytes (multipart/form-data field) (required)
         :type file: bytes
-        :param purpose: One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type.
+        :param purpose: One of `vision`, `video`, `audio`, or `document`. Determines size + mime limits and which models can reference the file. Optional — if omitted, inferred from the file's MIME type.
         :type purpose: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

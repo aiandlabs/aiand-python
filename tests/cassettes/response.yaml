@@ -1,0 +1,61 @@
+interactions:
+- request:
+    body: '{"model": "openai/gpt-oss-120b", "input": "Reply with exactly one short
+      sentence.", "stream": false, "temperature": 0, "max_output_tokens": 12, "parallel_tool_calls":
+      false, "truncation": "disabled"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - OpenAPI-Generator/0.1.0/python
+      authorization:
+      - Bearer <AIAND_API_KEY>
+    method: POST
+    uri: https://api.aiand.com/v1/responses
+  response:
+    body:
+      string: '{"id":"resp_8ab74990c43b739b","created_at":1780389603,"incomplete_details":{"reason":"max_output_tokens"},"instructions":null,"metadata":null,"model":"openai/gpt-oss-120b","object":"response","output":[{"id":"rs_b39754fd4217dc83","summary":[],"type":"reasoning","content":[{"text":"The
+        user says: \"Reply with exactly one","type":"reasoning_text"}],"encrypted_content":null,"status":null}],"parallel_tool_calls":false,"temperature":0,"tool_choice":"auto","tools":[],"top_p":1,"background":false,"max_output_tokens":12,"max_tool_calls":null,"previous_response_id":null,"prompt":null,"reasoning":null,"service_tier":"auto","status":"incomplete","text":null,"top_logprobs":null,"truncation":"disabled","usage":{"input_tokens":74,"input_tokens_details":{"cached_tokens":64,"input_tokens_per_turn":[74],"cached_tokens_per_turn":[64]},"output_tokens":12,"output_tokens_details":{"reasoning_tokens":10,"tool_output_tokens":0,"output_tokens_per_turn":[12],"tool_output_tokens_per_turn":[0]},"total_tokens":86},"user":null,"kv_transfer_params":null,"input_messages":null,"output_messages":null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      CF-RAY:
+      - <filtered>
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1085'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 02 Jun 2026 08:40:03 GMT
+      Nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      Report-To:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=oe7JpuDV2sdgxPrZyqWqqv4xCndSgDE8Wm2CPoql8xJzA654Lfb4qk%2Bn5x5LHGLTI2mxMOkUSovGQTce0m1o141Te4bQw0Z9h0wsRq5EIgsB%2BG5%2FoK2Xorohf91AiF86"}]}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=2592000
+      Vary:
+      - Origin
+      X-Model:
+      - openai/gpt-oss-120b
+      X-Org-ID:
+      - <filtered>
+      X-Processing-Ms:
+      - '1299'
+      X-RateLimit-Limit:
+      - '1000'
+      X-RateLimit-Remaining:
+      - '999'
+      X-Request-ID:
+      - <filtered>
+      alt-svc:
+      - h3=":443"; ma=86400
+    status:
+      code: 200
+      message: OK
+version: 1

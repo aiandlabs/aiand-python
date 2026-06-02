@@ -12,15 +12,9 @@ interactions:
     uri: https://api.aiand.com/v1/models
   response:
     body:
-      string: '{"object":"list","data":[{"id":"google/gemma-3-27b-it","name":"google/gemma-3-27b-it","object":"model","created":1775474514,"owned_by":"ai&","provider":"google","context_window":131072,"capabilities":[],"description":"Google
-        Gemma 3 27B instruction-tuned","input_per_1m":"0.000000","output_per_1m":"0.000000"},{"id":"google/gemma-4-31b-it","name":"google/gemma-4-31b-it","object":"model","created":1775474514,"owned_by":"ai&","provider":"google","context_window":262144,"capabilities":["reasoning","tool_calling","vision","video","document"],"description":"Google
-        Gemma 4 31B instruction-tuned","input_per_1m":"0.200000","output_per_1m":"0.500000"},{"id":"qwen/qwen3.5-9b","name":"qwen/qwen3.5-9b","object":"model","created":1775474514,"owned_by":"ai&","provider":"qwen","context_window":262144,"capabilities":["reasoning","tool_calling"],"description":"Qwen3.5
-        9B instruction-tuned model","input_per_1m":"0.000000","output_per_1m":"0.000000"},{"id":"qwen/qwen3.5-27b","name":"qwen/qwen3.5-27b","object":"model","created":1775474514,"owned_by":"ai&","provider":"qwen","context_window":262144,"capabilities":["reasoning","tool_calling"],"description":"Qwen3.5
-        27B instruction-tuned model","input_per_1m":"0.250000","output_per_1m":"1.800000"},{"id":"qwen/qwen3.5-397b-a17b","name":"qwen/qwen3.5-397b-a17b","object":"model","created":1775474514,"owned_by":"ai&","provider":"qwen","context_window":262144,"capabilities":["reasoning","tool_calling"],"description":"Qwen3.5
-        397B MoE model","input_per_1m":"0.550000","output_per_1m":"3.500000"},{"id":"zai-org/glm-5","name":"zai-org/glm-5","object":"model","created":1775474514,"owned_by":"ai&","provider":"zai-org","context_window":202752,"capabilities":["reasoning","tool_calling"],"description":"GLM-5
-        by ZhipuAI","input_per_1m":"0.950000","output_per_1m":"2.900000"},{"id":"zai-org/glm-5.1","name":"zai-org/glm-5.1","object":"model","created":1775633064,"owned_by":"ai&","provider":"zai-org","context_window":202752,"capabilities":["reasoning","tool_calling"],"description":"GLM-5.1
-        by ZhipuAI","input_per_1m":"1.400000","output_per_1m":"4.400000"},{"id":"deepseek-ai/deepseek-v3.2","name":"deepseek-ai/deepseek-v3.2","object":"model","created":1775474514,"owned_by":"ai&","provider":"deepseek-ai","context_window":163840,"capabilities":["reasoning","tool_calling"],"description":"DeepSeek
-        V3.2","input_per_1m":"0.500000","output_per_1m":"1.500000"},{"id":"openai/gpt-oss-120b","name":"openai/gpt-oss-120b","object":"model","created":1775474514,"owned_by":"ai&","provider":"openai","context_window":131072,"capabilities":["reasoning","tool_calling"],"description":"OpenAI
+      string: '{"object":"list","data":[{"id":"deepseek-ai/deepseek-v4-flash","name":"deepseek-ai/DeepSeek-V4-Flash","object":"model","created":1780245232,"owned_by":"ai&","provider":"deepseek-ai","context_window":1048576,"capabilities":["reasoning","tool_calling"],"description":"DeepSeek-V4-Flash","input_per_1m":"0.150000","output_per_1m":"0.250000"},{"id":"deepseek-ai/deepseek-v4-pro","name":"deepseek-ai/DeepSeek-V4-Pro","object":"model","created":1780245364,"owned_by":"ai&","provider":"deepseek-ai","context_window":1048576,"capabilities":["reasoning","tool_calling"],"description":"DeepSeek-V4-Pro","input_per_1m":"1.000000","output_per_1m":"2.500000"},{"id":"qwen/qwen3.6-27b","name":"qwen/qwen3.6-27b","object":"model","created":1780245077,"owned_by":"ai&","provider":"qwen","context_window":262144,"capabilities":["reasoning","tool_calling"],"description":"Qwen3.6-27B","input_per_1m":"0.000000","output_per_1m":"0.000000"},{"id":"google/gemma-4-31b-it","name":"google/gemma-4-31b-it","object":"model","created":1775474514,"owned_by":"ai&","provider":"google","context_window":262144,"capabilities":["reasoning","tool_calling","vision","video","document"],"description":"Google
+        Gemma 4 31B instruction-tuned","input_per_1m":"0.200000","output_per_1m":"0.500000"},{"id":"zai-org/glm-5.1","name":"zai-org/glm-5.1","object":"model","created":1775633064,"owned_by":"ai&","provider":"zai-org","context_window":202752,"capabilities":["reasoning","tool_calling"],"description":"GLM-5.1
+        by ZhipuAI","input_per_1m":"1.400000","output_per_1m":"4.400000"},{"id":"openai/gpt-oss-120b","name":"openai/gpt-oss-120b","object":"model","created":1775474514,"owned_by":"ai&","provider":"openai","context_window":131072,"capabilities":["reasoning","tool_calling"],"description":"OpenAI
         GPT OSS 120B","input_per_1m":"0.150000","output_per_1m":"0.600000"},{"id":"moonshotai/kimi-k2.6","name":"moonshotai/kimi-k2.6","object":"model","created":1777544690,"owned_by":"ai&","provider":"moonshotai","context_window":262144,"capabilities":["reasoning","tool_calling","vision","document"],"description":"Kimi
         K2.6 by Moonshot AI","input_per_1m":"0.850000","output_per_1m":"3.500000"}]}'
     headers:
@@ -31,15 +25,15 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '3010'
+      - '2154'
       Content-Type:
       - application/json
       Date:
-      - Fri, 22 May 2026 15:17:40 GMT
+      - Tue, 02 Jun 2026 08:39:58 GMT
       Nel:
       - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
       Report-To:
-      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=3X0iOHUmL9olmum45dephzQUXsUGokTQZOaYxPnZW4bM9XLleRvN67ev%2B6WTLOjs%2FLtRCVH%2BQK7qF%2Burrh0vKZZCyIFpf5y94OJs5lUYtdKtLMvwoO4VzEfrX2c7uajF"}]}'
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=2Q7Brp%2FMzbHNypt%2BZTeD4hnpQNXFfq2a4u2GJNOfihHWzFuOVGCbY3T3Qo9zd4p8knpTQ2uesVctkUIxb5hNWC%2FNv5LFeFU3qr4oNAJ9psIEZR%2BCcCjY7QnoCyR4ROZi"}]}'
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -49,7 +43,7 @@ interactions:
       X-Org-ID:
       - <filtered>
       X-Processing-Ms:
-      - '2476'
+      - '1642'
       X-Request-ID:
       - <filtered>
       alt-svc:

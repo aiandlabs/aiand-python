@@ -119,3 +119,4 @@ class CreateChatCompletionResponseChoicesInner(BaseModel):
 
         return _obj
 
+

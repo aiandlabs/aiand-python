@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,7 +29,7 @@ class FileDeleted(BaseModel):
     """ # noqa: E501
     id: StrictStr
     object: StrictStr
-    deleted: StrictBool
+    deleted: StrictBool = Field(description="Always true on a successful delete")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "object", "deleted"]
 
@@ -38,13 +38,6 @@ class FileDeleted(BaseModel):
         """Validates the enum"""
         if value not in set(['file']):
             raise ValueError("must be one of enum values ('file')")
-        return value
-
-    @field_validator('deleted')
-    def deleted_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is not True:
-            raise ValueError("must be True")
         return value
 
     model_config = ConfigDict(
@@ -115,4 +108,5 @@ class FileDeleted(BaseModel):
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
+
 

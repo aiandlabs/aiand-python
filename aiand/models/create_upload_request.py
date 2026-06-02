@@ -29,7 +29,7 @@ class CreateUploadRequest(BaseModel):
     CreateUploadRequest
     """ # noqa: E501
     filename: StrictStr
-    purpose: StrictStr = Field(description="One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type.")
+    purpose: StrictStr
     bytes: Annotated[int, Field(strict=True, ge=0)] = Field(description="Declared total size in bytes; checked against `purpose` limits")
     mime_type: StrictStr = Field(description="Mime type; checked against `purpose` allowlist")
     additional_properties: Dict[str, Any] = {}

@@ -5,6 +5,12 @@
     "version": "1.0.0",
     "description": "Unified spec covering inference, files, and other public surfaces. Drop-in compatible with OpenAI and Anthropic SDKs."
   },
+  "servers": [
+    {
+      "url": "https://api.aiand.com",
+      "description": "ai& API"
+    }
+  ],
   "paths": {
     "/v1/models": {
       "get": {
@@ -13,7 +19,7 @@
           "openai"
         ],
         "summary": "List models",
-        "description": "Lists available models and their pricing.",
+        "description": "Lists all active models with pricing.",
         "responses": {
           "200": {
             "description": "OK",
@@ -34,6 +40,9 @@
                           "id": {
                             "type": "string"
                           },
+                          "name": {
+                            "type": "string"
+                          },
                           "object": {
                             "type": "string",
                             "const": "model"
@@ -43,22 +52,43 @@
                           },
                           "owned_by": {
                             "type": "string",
-                            "const": "ai&"
+                            "example": "ai&"
+                          },
+                          "provider": {
+                            "type": "string"
+                          },
+                          "context_window": {
+                            "type": "integer"
+                          },
+                          "capabilities": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "description": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "input_per_1m": {
-                            "type": "string",
-                            "description": "USD per 1 million tokens. Returned as a string for precision."
+                            "type": "string"
                           },
                           "output_per_1m": {
-                            "type": "string",
-                            "description": "USD per 1 million tokens. Returned as a string for precision."
+                            "type": "string"
                           }
                         },
                         "required": [
                           "id",
+                          "name",
                           "object",
                           "created",
                           "owned_by",
+                          "provider",
+                          "context_window",
+                          "capabilities",
+                          "description",
                           "input_per_1m",
                           "output_per_1m"
                         ]
@@ -160,6 +190,62 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CreateCompletionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/InsufficientCredits"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "504": {
+            "$ref": "#/components/responses/GatewayTimeout"
+          }
+        }
+      }
+    },
+    "/v1/responses": {
+      "post": {
+        "operationId": "createResponse",
+        "tags": [
+          "openai"
+        ],
+        "summary": "Create a response",
+        "description": "Creates a response for the provided input and parameters.",
+        "requestBody": {
+          "description": "The request body for the response.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateResponseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateResponseResponse"
                 }
               }
             }
@@ -2389,13 +2475,403 @@
         ],
         "additionalProperties": true
       },
+      "CreateResponseResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for this response."
+          },
+          "object": {
+            "type": "string",
+            "const": "response",
+            "description": "The object type \u2014 always \"response\"."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "completed",
+              "failed",
+              "in_progress",
+              "cancelled",
+              "queued",
+              "incomplete"
+            ],
+            "description": "The status of the response generation."
+          },
+          "created_at": {
+            "type": "number",
+            "description": "Unix timestamp (in seconds) of when this response was created."
+          },
+          "completed_at": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Unix timestamp of completion. Only present when status is completed."
+          },
+          "model": {
+            "type": "string",
+            "description": "The model used to generate the response."
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "const": "message"
+                    },
+                    "role": {
+                      "type": "string",
+                      "const": "assistant"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "in_progress",
+                        "completed",
+                        "incomplete"
+                      ]
+                    },
+                    "content": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "output_text"
+                              },
+                              "text": {
+                                "type": "string"
+                              },
+                              "annotations": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "additionalProperties": true
+                                }
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "text"
+                            ],
+                            "additionalProperties": true
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "refusal"
+                              },
+                              "refusal": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "refusal"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type",
+                    "role",
+                    "status",
+                    "content"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "const": "function_call"
+                    },
+                    "call_id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "arguments": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type",
+                    "call_id",
+                    "name",
+                    "arguments"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "const": "reasoning"
+                    },
+                    "summary": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": true
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type"
+                  ],
+                  "additionalProperties": true
+                }
+              ]
+            },
+            "description": "An array of content items generated by the model."
+          },
+          "error": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "description": "Error details if the response generation failed."
+          },
+          "incomplete_details": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "max_output_tokens",
+                  "content_filter"
+                ]
+              }
+            },
+            "required": [
+              "reason"
+            ],
+            "description": "Details about why the response is incomplete."
+          },
+          "instructions": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "metadata": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "temperature": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "top_p": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "max_output_tokens": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "tool_choice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          },
+          "parallel_tool_calls": {
+            "type": "boolean"
+          },
+          "truncation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "auto",
+              "disabled",
+              null
+            ]
+          },
+          "previous_response_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reasoning": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "effort": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "minimal",
+                  "low",
+                  "medium",
+                  "high",
+                  "xhigh"
+                ]
+              },
+              "summary": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "auto",
+                  "concise",
+                  "detailed",
+                  null
+                ]
+              }
+            }
+          },
+          "text": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "top_logprobs": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "usage": {
+            "$ref": "#/components/schemas/ResponseUsage",
+            "description": "Token usage details for this response."
+          }
+        },
+        "required": [
+          "id",
+          "object",
+          "status",
+          "created_at",
+          "model",
+          "output"
+        ],
+        "additionalProperties": true
+      },
+      "ResponseUsage": {
+        "type": "object",
+        "properties": {
+          "input_tokens": {
+            "type": "integer"
+          },
+          "output_tokens": {
+            "type": "integer"
+          },
+          "total_tokens": {
+            "type": "integer"
+          },
+          "input_tokens_details": {
+            "type": "object",
+            "properties": {
+              "cached_tokens": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "cached_tokens"
+            ],
+            "additionalProperties": true
+          },
+          "output_tokens_details": {
+            "type": "object",
+            "properties": {
+              "reasoning_tokens": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "reasoning_tokens"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "input_tokens",
+          "output_tokens",
+          "total_tokens"
+        ]
+      },
       "CreateFileRequest": {
         "type": "object",
         "properties": {
           "file": {
             "type": "string",
-            "description": "The asset bytes (multipart/form-data field)",
-            "format": "binary"
+            "format": "binary",
+            "description": "The asset bytes (multipart/form-data field)"
           },
           "purpose": {
             "type": "string",
@@ -2405,7 +2881,7 @@
               "audio",
               "document"
             ],
-            "description": "One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type."
+            "description": "One of `vision`, `video`, `audio`, or `document`. Determines size + mime limits and which models can reference the file. Optional \u2014 if omitted, inferred from the file's MIME type."
           }
         },
         "required": [
@@ -2450,8 +2926,7 @@
               "video",
               "audio",
               "document"
-            ],
-            "description": "One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type."
+            ]
           }
         },
         "required": [
@@ -2513,7 +2988,7 @@
           },
           "deleted": {
             "type": "boolean",
-            "const": true
+            "description": "Always true on a successful delete"
           }
         },
         "required": [
@@ -2558,8 +3033,7 @@
               "video",
               "audio",
               "document"
-            ],
-            "description": "One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type."
+            ]
           },
           "status": {
             "type": "string",
@@ -2633,8 +3107,7 @@
               "video",
               "audio",
               "document"
-            ],
-            "description": "One of `vision`, `video`, `audio`, or `document`. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type."
+            ]
           },
           "bytes": {
             "type": "integer",
@@ -2658,8 +3131,8 @@
         "properties": {
           "data": {
             "type": "string",
-            "description": "Bytes for this part (multipart/form-data field), max 64 MB",
-            "format": "binary"
+            "format": "binary",
+            "description": "Bytes for this part (multipart/form-data field), max 64 MB"
           }
         },
         "required": [
@@ -2785,12 +3258,6 @@
   "security": [
     {
       "bearerAuth": []
-    }
-  ],
-  "servers": [
-    {
-      "url": "https://api.aiand.com",
-      "description": "ai& API"
     }
   ]
 }

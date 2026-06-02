@@ -6,11 +6,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | 
+**name** | **str** |  | 
 **object** | **str** |  | 
 **created** | **int** |  | 
 **owned_by** | **str** |  | 
-**input_per_1m** | **str** | USD per 1 million tokens. Returned as a string for precision. | 
-**output_per_1m** | **str** | USD per 1 million tokens. Returned as a string for precision. | 
+**provider** | **str** |  | 
+**context_window** | **int** |  | 
+**capabilities** | **List[str]** |  | 
+**description** | **str** |  | 
+**input_per_1m** | **str** |  | 
+**output_per_1m** | **str** |  | 
 
 ## Example
 

@@ -17,38 +17,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class FileObject(BaseModel):
+class CreateResponseResponseIncompleteDetails(BaseModel):
     """
-    FileObject
+    Details about why the response is incomplete.
     """ # noqa: E501
-    id: StrictStr = Field(description="Stable file id with `file-` prefix")
-    object: StrictStr
-    bytes: StrictInt
-    created_at: StrictInt = Field(description="Unix timestamp")
-    expires_at: Optional[StrictInt] = Field(description="Unix timestamp; defaults to 30 days from upload")
-    filename: Optional[StrictStr]
-    purpose: StrictStr
+    reason: StrictStr
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "object", "bytes", "created_at", "expires_at", "filename", "purpose"]
+    __properties: ClassVar[List[str]] = ["reason"]
 
-    @field_validator('object')
-    def object_validate_enum(cls, value):
+    @field_validator('reason')
+    def reason_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['file']):
-            raise ValueError("must be one of enum values ('file')")
-        return value
-
-    @field_validator('purpose')
-    def purpose_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['vision', 'video', 'audio', 'document']):
-            raise ValueError("must be one of enum values ('vision', 'video', 'audio', 'document')")
+        if value not in set(['max_output_tokens', 'content_filter']):
+            raise ValueError("must be one of enum values ('max_output_tokens', 'content_filter')")
         return value
 
     model_config = ConfigDict(
@@ -69,7 +56,7 @@ class FileObject(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FileObject from a JSON string"""
+        """Create an instance of CreateResponseResponseIncompleteDetails from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -97,21 +84,11 @@ class FileObject(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
-        # set to None if expires_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.expires_at is None and "expires_at" in self.model_fields_set:
-            _dict['expires_at'] = None
-
-        # set to None if filename (nullable) is None
-        # and model_fields_set contains the field
-        if self.filename is None and "filename" in self.model_fields_set:
-            _dict['filename'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FileObject from a dict"""
+        """Create an instance of CreateResponseResponseIncompleteDetails from a dict"""
         if obj is None:
             return None
 
@@ -119,13 +96,7 @@ class FileObject(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "object": obj.get("object"),
-            "bytes": obj.get("bytes"),
-            "created_at": obj.get("created_at"),
-            "expires_at": obj.get("expires_at"),
-            "filename": obj.get("filename"),
-            "purpose": obj.get("purpose")
+            "reason": obj.get("reason")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
