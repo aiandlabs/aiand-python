@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **created_at** | **int** | Unix timestamp | 
 **expires_at** | **int** | Unix timestamp (1 hour from creation by default) | 
 **filename** | **str** |  | 
-**purpose** | **str** | One of &#x60;vision&#x60;, &#x60;video&#x60;, &#x60;audio&#x60;, or &#x60;document&#x60;. Determines size, MIME limits, and which models can reference the file. Optional for single-shot file uploads when the API can infer it from MIME type. | 
+**purpose** | **str** |  | 
 **status** | **str** |  | 
 **file** | [**FileObject**](FileObject.md) | Populated once status is &#x60;completed&#x60; | 
 

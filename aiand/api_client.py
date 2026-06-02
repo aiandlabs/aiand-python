@@ -333,6 +333,7 @@ class ApiClient:
             raw_data = response_data.data
         )
 
+
     @staticmethod
     def _response_headers_to_dict(headers):
         """Normalize urllib3/vcrpy response headers for ApiResponse validation."""

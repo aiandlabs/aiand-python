@@ -5,12 +5,11 @@ Use the ai& API with Python.
 This package is generated from the public ai& OpenAPI spec with
 [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator). It covers the
 OpenAI-compatible endpoints currently present in the spec: models, chat completions,
-legacy completions, files, and chunked uploads.
+legacy completions, responses, files, and chunked uploads.
 
 ai& also publishes docs at [docs.aiand.com](https://docs.aiand.com). The SDK update
-script applies a small normalization layer where the docs and generated SDK need the same
-shape, such as the default API server, file-purpose enum values, string pricing fields, and
-multipart binary uploads.
+script regenerates from the public OpenAPI spec, then applies a small post-generation
+compatibility layer for Python generator edge cases.
 
 ## Installation
 
@@ -114,6 +113,33 @@ with aiand.ApiClient(configuration) as api_client:
 print(response.choices[0].text)
 ```
 
+## Responses
+
+```python
+import os
+
+import aiand
+
+configuration = aiand.Configuration(access_token=os.environ["AIAND_API_KEY"])
+
+request = aiand.CreateResponseRequest(
+    model="openai/gpt-oss-120b",
+    input=aiand.ResponseInput("Give me one practical sentence about ai&."),
+    temperature=0.2,
+    max_output_tokens=64,
+    parallel_tool_calls=False,
+    truncation="disabled",
+)
+
+with aiand.ApiClient(configuration) as api_client:
+    client = aiand.OpenaiApi(api_client)
+    response = client.create_response(request)
+
+print(response.to_dict()["output"])
+```
+
+The typed constructor omits unset optional parameters from the request body.
+
 ## Models And Pricing
 
 ```python
@@ -128,8 +154,14 @@ with aiand.ApiClient(configuration) as api_client:
     models = client.list_models()
 
 for model in models.data:
-    data = model.to_dict()
-    print(model.id, data.get("context_window"), model.input_per_1m, model.output_per_1m)
+    print(
+        model.id,
+        model.provider,
+        model.context_window,
+        model.capabilities,
+        model.input_per_1m,
+        model.output_per_1m,
+    )
 ```
 
 The docs describe model pricing as precise string fields. This SDK keeps
@@ -269,13 +301,14 @@ The VCR suite records one compact cassette per public endpoint group:
 - `list_models.yaml`
 - `chat_completion.yaml`
 - `completion.yaml`
+- `response.yaml`
 - `files_lifecycle.yaml`
 - `uploads_complete.yaml`
 - `uploads_cancel.yaml`
 
 Together those cassettes hit every endpoint currently generated from the OpenAPI spec:
 `GET /v1/models`, `POST /v1/chat/completions`, `POST /v1/completions`,
-`GET /v1/files`, `POST /v1/files`, `GET /v1/files/{id}`,
+`POST /v1/responses`, `GET /v1/files`, `POST /v1/files`, `GET /v1/files/{id}`,
 `GET /v1/files/{id}/content`, `DELETE /v1/files/{id}`, `POST /v1/uploads`,
 `POST /v1/uploads/{id}/parts`, `POST /v1/uploads/{id}/complete`, and
 `POST /v1/uploads/{id}/cancel`.
@@ -297,10 +330,9 @@ Regenerate from the latest published spec:
 
 That script:
 
-1. Downloads `https://api.aiand.com/openapi.json`.
-2. Applies documented normalization in `scripts/patch_openapi_spec.py`.
-3. Writes the patched spec to `openapi/openapi.json`.
-4. Runs OpenAPI Generator with `openapi-generator-config.yaml`.
+1. Downloads `https://api.aiand.com/openapi.json` to `openapi/openapi.json`.
+2. Runs OpenAPI Generator with `openapi-generator-config.yaml`.
+3. Applies `scripts/patch_generated_client.py` for generator-specific Python compatibility.
 
 After regenerating:
 
@@ -310,11 +342,13 @@ uv run --extra dev ruff check tests scripts
 ```
 
 Review the generated diff in `aiand/`, `docs/`, and `openapi/openapi.json`. If the public
-spec has gained endpoints or corrected a normalized field, update
-`scripts/patch_openapi_spec.py` so the local patch layer remains small and obvious.
+spec has gained endpoints or corrected a generator edge case, update
+`scripts/patch_generated_client.py` so the post-generation patch layer remains small and
+obvious.
 
-The OpenAPI Generator version is pinned in `openapitools.json`. To upgrade the generator,
-edit that file, regenerate, and review the generated diff carefully.
+The npm wrapper is pinned in `scripts/update-sdk`, and the OpenAPI Generator version is
+pinned in `openapitools.json`. To upgrade either one, edit the pinned version, regenerate,
+and review the generated diff carefully.
 
 ## Development Notes
 
@@ -325,7 +359,6 @@ Most SDK files are generated. The main hand-maintained files are:
 - `LICENSE`
 - `pyproject.toml`
 - `scripts/update-sdk`
-- `scripts/patch_openapi_spec.py`
 - `scripts/patch_generated_client.py`
 - `scripts/record-cassettes`
 - `tests/`

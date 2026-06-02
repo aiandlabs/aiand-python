@@ -19,7 +19,7 @@ interactions:
     uri: https://api.aiand.com/v1/chat/completions
   response:
     body:
-      string: '{"id":"chatcmpl-fbe2164b-149b-42f2-b5bf-07afd0557321","object":"chat.completion","created":1779463489,"model":"openai/gpt-oss-120b","choices":[{"index":0,"message":{"role":"assistant","content":null,"refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[],"reasoning":"The
+      string: '{"id":"chatcmpl-779f11dd-5329-4103-a1ac-ce774072e18a","object":"chat.completion","created":1780389600,"model":"openai/gpt-oss-120b","choices":[{"index":0,"message":{"role":"assistant","content":null,"refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[],"reasoning":"The
         user says: \"Reply with exactly one"},"logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null}],"service_tier":null,"system_fingerprint":null,"usage":{"prompt_tokens":74,"total_tokens":86,"completion_tokens":12,"prompt_tokens_details":null},"prompt_logprobs":null,"prompt_token_ids":null,"kv_transfer_params":null}'
     headers:
       Access-Control-Allow-Credentials:
@@ -33,31 +33,27 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 22 May 2026 15:24:49 GMT
+      - Tue, 02 Jun 2026 08:40:01 GMT
       Nel:
       - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
       Report-To:
-      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=S30tzlX7pNQRSENLI7jsTf%2BtKUl%2FJg75HEvJkbn7Wqa%2BYQohpeA4ua930ZQ8zB1BleAAKjVBjkKsdRYKzrTZEeCRj2GUAuTdwc7AD0f2%2Fridxo7f2M8eat95lDtWbb3n"}]}'
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=upi4Pi93gyiEMy2iGvZ8uymfNXBnj3La%2FCyKGCy4l5mASAqjVoDVAI1NnrJfDjysE2Wyewc12cTX3%2Fua1%2BDB4lCAs47qBYJO1MhERy72UK4MYTn%2FA2gCJVyYiLNwr%2B5T"}]}'
       Server:
       - cloudflare
       Strict-Transport-Security:
       - max-age=2592000
       Vary:
       - Origin
-      X-Cost-Usd:
-      - '0.00001830'
-      X-Inference-Ms:
-      - '1121'
       X-Model:
       - openai/gpt-oss-120b
       X-Org-ID:
       - <filtered>
       X-Processing-Ms:
-      - '5562'
+      - '2562'
       X-RateLimit-Limit:
-      - '300'
+      - '1000'
       X-RateLimit-Remaining:
-      - '299'
+      - '999'
       X-Request-ID:
       - <filtered>
       alt-svc:

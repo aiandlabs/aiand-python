@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -28,26 +28,24 @@ class ListModels200ResponseDataInner(BaseModel):
     ListModels200ResponseDataInner
     """ # noqa: E501
     id: StrictStr
+    name: StrictStr
     object: StrictStr
     created: StrictInt
     owned_by: StrictStr
-    input_per_1m: StrictStr = Field(description="USD per 1 million tokens. Returned as a string for precision.")
-    output_per_1m: StrictStr = Field(description="USD per 1 million tokens. Returned as a string for precision.")
+    provider: StrictStr
+    context_window: StrictInt
+    capabilities: List[StrictStr]
+    description: Optional[StrictStr]
+    input_per_1m: StrictStr
+    output_per_1m: StrictStr
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "object", "created", "owned_by", "input_per_1m", "output_per_1m"]
+    __properties: ClassVar[List[str]] = ["id", "name", "object", "created", "owned_by", "provider", "context_window", "capabilities", "description", "input_per_1m", "output_per_1m"]
 
     @field_validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['model']):
             raise ValueError("must be one of enum values ('model')")
-        return value
-
-    @field_validator('owned_by')
-    def owned_by_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['ai&']):
-            raise ValueError("must be one of enum values ('ai&')")
         return value
 
     model_config = ConfigDict(
@@ -96,6 +94,11 @@ class ListModels200ResponseDataInner(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if description (nullable) is None
+        # and model_fields_set contains the field
+        if self.description is None and "description" in self.model_fields_set:
+            _dict['description'] = None
+
         return _dict
 
     @classmethod
@@ -109,9 +112,14 @@ class ListModels200ResponseDataInner(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
+            "name": obj.get("name"),
             "object": obj.get("object"),
             "created": obj.get("created"),
             "owned_by": obj.get("owned_by"),
+            "provider": obj.get("provider"),
+            "context_window": obj.get("context_window"),
+            "capabilities": obj.get("capabilities"),
+            "description": obj.get("description"),
             "input_per_1m": obj.get("input_per_1m"),
             "output_per_1m": obj.get("output_per_1m")
         })

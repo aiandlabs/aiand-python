@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply small patches to generated files that OpenAPI Generator cannot express."""
+"""Apply small post-generation compatibility patches."""
 
 from __future__ import annotations
 
@@ -22,20 +22,6 @@ HELPER = '''
 
 '''
 INSERT_BEFORE = "    def sanitize_for_serialization(self, obj):\n"
-OLD_FILE_DELETED_VALIDATOR = """    @field_validator('deleted')
-    def deleted_validate_enum(cls, value):
-        \"\"\"Validates the enum\"\"\"
-        if value not in set(['true']):
-            raise ValueError("must be one of enum values ('true')")
-        return value
-"""
-NEW_FILE_DELETED_VALIDATOR = """    @field_validator('deleted')
-    def deleted_validate_enum(cls, value):
-        \"\"\"Validates the enum\"\"\"
-        if value is not True:
-            raise ValueError("must be True")
-        return value
-"""
 CHOICE_LOGPROBS_REPLACEMENTS = {
     "create_chat_completion_response_choices_inner.py": (
         "    logprobs: CreateChatCompletionResponseChoicesInnerLogprobs\n",
@@ -66,15 +52,9 @@ def patch_api_client(path: Path) -> None:
     if OLD_HEADERS in source:
         source = source.replace(OLD_HEADERS, NEW_HEADERS, 1)
 
-    if "_response_headers_to_dict" not in source:
+    if "    def _response_headers_to_dict(" not in source:
         source = source.replace(INSERT_BEFORE, HELPER + INSERT_BEFORE, 1)
 
-    path.write_text(source)
-
-
-def patch_file_deleted(path: Path) -> None:
-    source = path.read_text()
-    source = source.replace(OLD_FILE_DELETED_VALIDATOR, NEW_FILE_DELETED_VALIDATOR, 1)
     path.write_text(source)
 
 
@@ -109,7 +89,6 @@ def main() -> int:
     root = Path(sys.argv[1])
     patch_api_client(root / "aiand" / "api_client.py")
     models_root = root / "aiand" / "models"
-    patch_file_deleted(models_root / "file_deleted.py")
     patch_nullable_choice_logprobs(models_root)
     patch_setup_metadata(root / "setup.py")
     patch_configuration(root / "aiand" / "configuration.py")

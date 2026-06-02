@@ -37,7 +37,6 @@ openapitools.json
 scripts/**
 tests/**
 .env.test.example
-OPENAPI_SPEC_FEEDBACK.md
 
 # Generated project plumbing we keep hand-maintained or omit.
 .github/**

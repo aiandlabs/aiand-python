@@ -88,6 +88,39 @@ def test_create_completion_with_vcr(aiand_vcr, require_cassette_or_recording) ->
     assert response.choices[0].text is not None
 
 
+def test_create_response_with_vcr(aiand_vcr, require_cassette_or_recording) -> None:
+    request = aiand.CreateResponseRequest(
+        model=MODEL_ID,
+        input=aiand.ResponseInput("Reply with exactly one short sentence."),
+        temperature=0,
+        max_output_tokens=12,
+        parallel_tool_calls=False,
+        truncation="disabled",
+    )
+
+    with aiand.ApiClient(_configuration()) as api_client:
+        client = aiand.OpenaiApi(api_client)
+
+        with _cassette(aiand_vcr, require_cassette_or_recording, "response.yaml"):
+            response = client.create_response(
+                request,
+                _request_timeout=REQUEST_TIMEOUT,
+            )
+
+    assert response.object == "response"
+    assert response.id
+    assert response.status in {
+        "completed",
+        "failed",
+        "in_progress",
+        "cancelled",
+        "queued",
+        "incomplete",
+    }
+    assert response.model
+    assert response.output is not None
+
+
 def test_files_lifecycle_with_vcr(aiand_vcr, require_cassette_or_recording) -> None:
     with aiand.ApiClient(_configuration()) as api_client:
         files = aiand.FilesApi(api_client)

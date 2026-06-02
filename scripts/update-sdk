@@ -5,8 +5,10 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RAW_SPEC="$(mktemp)"
 OPENAPI_GENERATOR_CLI="@openapitools/openapi-generator-cli@2.34.0"
 
+trap 'rm -f "$RAW_SPEC"' EXIT
+
 curl -fsSL "https://api.aiand.com/openapi.json" -o "$RAW_SPEC"
-"$ROOT_DIR/scripts/patch_openapi_spec.py" "$RAW_SPEC" "$ROOT_DIR/openapi/openapi.json"
+python3 -m json.tool --indent 2 "$RAW_SPEC" "$ROOT_DIR/openapi/openapi.json"
 
 cd "$ROOT_DIR"
 

@@ -17,7 +17,7 @@ interactions:
     uri: https://api.aiand.com/v1/completions
   response:
     body:
-      string: '{"id":"chatcmpl-521ce1a5-d236-4728-bd91-2d04d9172f38","object":"text_completion","created":1779463492,"model":"openai/gpt-oss-120b","choices":[{"text":"","index":0,"logprobs":null,"finish_reason":"length"}],"usage":{"prompt_tokens":75,"total_tokens":83,"completion_tokens":8,"prompt_tokens_details":null}}'
+      string: '{"id":"chatcmpl-7a28a313-4f9d-459c-a623-50d1f22cbb66","object":"text_completion","created":1780389602,"model":"openai/gpt-oss-120b","choices":[{"text":"","index":0,"logprobs":null,"finish_reason":"length"}],"usage":{"prompt_tokens":75,"total_tokens":83,"completion_tokens":8,"prompt_tokens_details":null}}'
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -30,31 +30,27 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 22 May 2026 15:24:52 GMT
+      - Tue, 02 Jun 2026 08:40:02 GMT
       Nel:
       - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
       Report-To:
-      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=Q8HXaqlmSzQIK2%2B1BO5v1rUSNGwknK91B3IQgCD4Rr%2FNUb5C7hn4nplPWBT%2BDJR5ipOXYTq2akuyAPSyH0OwkCoU%2BqLAQr0AT%2FOo2RnvTb%2BiuBBU0RkDs7Xnv71YXunF"}]}'
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=5YqUgPVYnZk28sYl9dnLPZwswGDDG2f0ymyb%2BfhJhPgWZr%2BLTQERCB99ICVPOQu5wB4BC3xv%2Bw0fIGvmF0vui3fIch38Mq4730a0PqxjNV65SCoP4Yh42QQs%2FJ8pMq46"}]}'
       Server:
       - cloudflare
       Strict-Transport-Security:
       - max-age=2592000
       Vary:
       - Origin
-      X-Cost-Usd:
-      - '0.00001605'
-      X-Inference-Ms:
-      - '592'
       X-Model:
       - openai/gpt-oss-120b
       X-Org-ID:
       - <filtered>
       X-Processing-Ms:
-      - '2211'
+      - '1494'
       X-RateLimit-Limit:
-      - '300'
+      - '1000'
       X-RateLimit-Remaining:
-      - '299'
+      - '999'
       X-Request-ID:
       - <filtered>
       alt-svc:

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | 
 **object** | **str** |  | 
-**deleted** | **bool** |  | 
+**deleted** | **bool** | Always true on a successful delete | 
 
 ## Example
 
