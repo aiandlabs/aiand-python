@@ -1,0 +1,60 @@
+name: Publish to PyPI
+
+# Triggered by pushing a version tag (e.g. v0.2.0), typically via `make release VERSION=0.2.0`.
+# Publishing uses PyPI Trusted Publishing (OIDC) — no API tokens are stored anywhere.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Build sdist + wheel
+        run: uv run --extra dev python -m build
+
+      - name: Check artifacts
+        run: uv run --extra dev twine check dist/*
+
+      - name: Verify tag matches package version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG=$(uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          if [ "$TAG" != "$PKG" ]; then
+            echo "Tag v$TAG does not match pyproject version $PKG"; exit 1
+          fi
+          echo "Tag and package version agree: $PKG"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/aiand/
+    permissions:
+      id-token: write   # required for Trusted Publishing (OIDC)
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
