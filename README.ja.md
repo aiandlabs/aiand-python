@@ -2,16 +2,16 @@
 
 Python で ai& API を使用します。
 
-このパッケージは、公開されている ai& OpenAPI spec から
-[OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) を使って生成されています。現在 spec に含まれている
-OpenAI 互換エンドポイントである models、chat completions、legacy completions、
-responses、files、chunked uploads をカバーしています。
+このパッケージは、公開されている ai& OpenAPI 仕様から
+[OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) を使って生成されています。現在の仕様に含まれる
+OpenAI 互換エンドポイントとして、モデル、チャット補完、補完 (レガシー)、
+レスポンス、ファイル、チャンクアップロードをカバーしています。
 
 ai& は [docs.aiand.com](https://docs.aiand.com) でもドキュメントを公開しています。SDK 更新
-スクリプトは公開 OpenAPI spec から再生成し、その後 Python generator のエッジケース向けに
-小さな生成後互換レイヤーを適用します。
+スクリプトは公開 OpenAPI 仕様から再生成し、その後 Python ジェネレータのエッジケース向けに
+小さな生成後の互換レイヤーを適用します。
 
-## Installation
+## インストール
 
 このチェックアウトからインストールする場合:
 
@@ -35,7 +35,7 @@ python -m pip install aiand
 
 現在の SDK バージョンは `0.1.0` です。リリースノートは [CHANGELOG.md](CHANGELOG.md) を参照してください。
 
-## Usage
+## 使い方
 
 API キーを環境変数に設定します:
 
@@ -62,7 +62,7 @@ print(models.data[0].id)
 生成されたベース URL は `https://api.aiand.com` です。OpenAPI のパスには `/v1` が含まれるため、SDK の
 呼び出しは `https://api.aiand.com/v1/models` のような URL に解決されます。
 
-## Chat
+## チャット補完
 
 ```python
 import os
@@ -89,7 +89,7 @@ with aiand.ApiClient(configuration) as api_client:
 print(response.choices[0].message.content)
 ```
 
-## Completions
+## 補完
 
 ```python
 import os
@@ -113,7 +113,7 @@ with aiand.ApiClient(configuration) as api_client:
 print(response.choices[0].text)
 ```
 
-## Responses
+## レスポンス
 
 ```python
 import os
@@ -140,7 +140,7 @@ print(response.to_dict()["output"])
 
 型付きコンストラクタは、設定されていない任意パラメータをリクエスト本文から省略します。
 
-## Models And Pricing
+## モデルと料金
 
 ```python
 import os
@@ -167,9 +167,9 @@ for model in models.data:
 ドキュメントでは、モデル料金は精密な文字列フィールドとして説明されています。この SDK では
 `input_per_1m` と `output_per_1m` を float ではなく文字列として保持します。
 
-## Files
+## ファイル
 
-ファイルを一度アップロードし、返された `file_id` を chat completion リクエストから参照します。
+ファイルを一度アップロードし、返された `file_id` をチャット補完リクエストから参照します。
 
 ```python
 import os
@@ -190,11 +190,11 @@ with aiand.ApiClient(configuration) as api_client:
 print(uploaded.id)
 ```
 
-ファイル purpose の値は `vision`、`video`、`audio`、`document` です。
+ファイルの `purpose` は `vision`、`video`、`audio`、`document` のいずれかです。
 
-## Chunked Uploads
+## チャンクアップロード
 
-より大きなアセットでは、upload を作成し、part を順番に追加してから完了します。
+より大きなアセットでは、アップロードを作成し、パートを順番に追加してから完了します。
 
 ```python
 import os
@@ -229,9 +229,9 @@ with aiand.ApiClient(configuration) as api_client:
 print(completed.file.id)
 ```
 
-## Timeouts And Headers
+## タイムアウトとヘッダ
 
-生成された各 operation は、OpenAPI Generator の標準的なリクエスト制御を受け付けます:
+生成された各操作は、OpenAPI Generator の標準的なリクエスト制御を受け付けます:
 
 ```python
 response = client.list_models(
@@ -240,11 +240,11 @@ response = client.list_models(
 )
 ```
 
-API キー認証には `Configuration(access_token=...)` を使用します。ドキュメントでは、browser/JWT
-auth では `X-Org-ID` が必要になる場合があると説明されています。サーバーサイド API キーでは、organization は
-キーから解決されます。
+API キー認証には `Configuration(access_token=...)` を使用します。ドキュメントでは、ブラウザアプリや
+コンソールでの JWT 認証では `X-Org-ID` が必要になる場合があると説明されています。サーバーサイド
+API キーでは、組織はキーから解決されます。
 
-## Errors
+## エラー
 
 生成されたクライアントは、非 2xx レスポンスに対して `aiand.ApiException` を送出します。
 
@@ -258,15 +258,15 @@ except aiand.ApiException as error:
     print(error.body)
 ```
 
-## Testing
+## テスト
 
-ネットワーク呼び出しなしで unit tests を実行します:
+ネットワーク呼び出しなしで単体テストを実行します:
 
 ```sh
 uv run --extra test pytest
 ```
 
-hand-maintained code 向けの focused linter を実行します:
+手動で管理しているコード向けに、対象を絞ったリンターを実行します:
 
 ```sh
 uv run --extra dev ruff check tests scripts
@@ -275,12 +275,12 @@ uv run --extra dev ruff check tests scripts
 `aiand/` 以下の生成コードは意図的に Ruff から除外されています。これは
 OpenAPI Generator によって再作成されるため、手で再フォーマットするのではなく、挙動をレビューする必要があります。
 
-## Recording VCR Cassettes
+## VCR カセットの記録
 
-テストでは live API coverage のために [vcrpy](https://vcrpy.readthedocs.io/) を使用します。Cassettes は
+テストでは実際の API 通信を記録するために [vcrpy](https://vcrpy.readthedocs.io/) を使用します。カセットは
 `tests/cassettes` に置かれます。
 
-cassettes を記録するには、`.env.test` を作成します:
+カセットを記録するには、`.env.test` を作成します:
 
 ```sh
 AIAND_API_KEY=sk-your-real-aiand-api-key
@@ -292,11 +292,11 @@ AIAND_API_KEY=sk-your-real-aiand-api-key
 ./scripts/record-cassettes
 ```
 
-VCR config は `Authorization` ヘッダーと、一般的な request/organization ヘッダーをフィルタします。
-recording script は `AIAND_VCR_RECORD_MODE=once` を設定します。`.env.test` はコミットしないでください。
-sanitized cassette files のみをコミットしてください。
+VCR 設定は `Authorization` ヘッダと、一般的なリクエスト/組織ヘッダをフィルタします。
+記録スクリプトは `AIAND_VCR_RECORD_MODE=once` を設定します。`.env.test` はコミットしないでください。
+サニタイズ済みのカセットファイルのみをコミットしてください。
 
-VCR suite は、公開 endpoint group ごとに 1 つの compact cassette を記録します:
+VCR テストは、公開エンドポイントグループごとに 1 つのコンパクトなカセットを記録します:
 
 - `list_models.yaml`
 - `chat_completion.yaml`
@@ -306,33 +306,33 @@ VCR suite は、公開 endpoint group ごとに 1 つの compact cassette を記
 - `uploads_complete.yaml`
 - `uploads_cancel.yaml`
 
-これらの cassettes を合わせると、現在 OpenAPI spec から生成されるすべての endpoint に到達します:
+これらのカセットを合わせると、現在 OpenAPI 仕様から生成されるすべてのエンドポイントに到達します:
 `GET /v1/models`、`POST /v1/chat/completions`、`POST /v1/completions`、
 `POST /v1/responses`、`GET /v1/files`、`POST /v1/files`、`GET /v1/files/{id}`、
 `GET /v1/files/{id}/content`、`DELETE /v1/files/{id}`、`POST /v1/uploads`、
 `POST /v1/uploads/{id}/parts`、`POST /v1/uploads/{id}/complete`、および
 `POST /v1/uploads/{id}/cancel` です。
 
-## Updating The SDK
+## SDK の更新
 
-Prerequisites:
+前提条件:
 
 - Java。OpenAPI Generator に必要です。
 - Node/npm と `npx`。`@openapitools/openapi-generator-cli@2.34.0` の実行に使用します。
 - Python 3.10 以上。
-- development と tests 用の `uv`。
+- 開発とテスト用の `uv`。
 
-最新の公開 spec から再生成します:
+最新の公開仕様から再生成します:
 
 ```sh
 ./scripts/update-sdk
 ```
 
-この script は次を行います:
+このスクリプトは次を行います:
 
 1. `https://api.aiand.com/openapi.json` を `openapi/openapi.json` にダウンロードします。
 2. `openapi-generator-config.yaml` で OpenAPI Generator を実行します。
-3. generator-specific Python compatibility のために `scripts/patch_generated_client.py` を適用します。
+3. Python ジェネレータ固有の互換性のために `scripts/patch_generated_client.py` を適用します。
 
 再生成後:
 
@@ -341,17 +341,17 @@ uv run --extra test pytest
 uv run --extra dev ruff check tests scripts
 ```
 
-`aiand/`、`docs/`、`openapi/openapi.json` の生成 diff をレビューしてください。公開
-spec に endpoint が追加された場合や generator edge case が修正された場合は、
-post-generation patch layer が小さく明確なままであるように `scripts/patch_generated_client.py` を更新してください。
+`aiand/`、`docs/`、`openapi/openapi.json` の生成差分をレビューしてください。公開
+仕様にエンドポイントが追加された場合やジェネレータのエッジケースが修正された場合は、
+生成後のパッチレイヤーが小さく明確なままであるように `scripts/patch_generated_client.py` を更新してください。
 
-npm wrapper は `scripts/update-sdk` で pin されており、OpenAPI Generator version は
-`openapitools.json` で pin されています。どちらかを upgrade するには、pin された version を編集し、再生成して、
-生成 diff を慎重にレビューしてください。
+npm ラッパーは `scripts/update-sdk` で固定されており、OpenAPI Generator のバージョンは
+`openapitools.json` で固定されています。どちらかをアップグレードするには、固定されたバージョンを編集し、再生成して、
+生成差分を慎重にレビューしてください。
 
-## Development Notes
+## 開発メモ
 
-ほとんどの SDK ファイルは生成されています。主な hand-maintained files は次のとおりです:
+ほとんどの SDK ファイルは生成されています。主な手動管理ファイルは次のとおりです:
 
 - `README.md`
 - `CHANGELOG.md`
@@ -362,8 +362,8 @@ npm wrapper は `scripts/update-sdk` で pin されており、OpenAPI Generator
 - `scripts/record-cassettes`
 - `tests/`
 
-bug reports と pull requests を歓迎します。
+バグ報告とプルリクエストを歓迎します。
 
-## License
+## ライセンス
 
 このプロジェクトは [Apache License 2.0](LICENSE) の下でライセンスされています。
