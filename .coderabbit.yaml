@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# Without this, CodeRabbit ignores the shared aiandlabs/coderabbit config for this repo instead of merging it.
+inheritance: true
+reviews:
+  path_filters:
+    - "!aiand/**"
+    - "!docs/*.md"
+    - "!.openapi-generator/**"
+    - "!openapi/openapi.json"
