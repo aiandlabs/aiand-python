@@ -13,7 +13,15 @@ compatibility layer for Python generator edge cases.
 
 ## Installation
 
-From this checkout:
+```sh
+python -m pip install aiand
+```
+
+The current SDK version is `0.1.0`. See [CHANGELOG.md](CHANGELOG.md) for release notes.
+
+### From source
+
+To work on the SDK itself:
 
 ```sh
 cd aiand-python
@@ -26,14 +34,6 @@ With `uv`:
 cd aiand-python
 uv sync --extra test --extra dev
 ```
-
-Once this package is published, install it as:
-
-```sh
-python -m pip install aiand
-```
-
-The current SDK version is `0.1.0`. See [CHANGELOG.md](CHANGELOG.md) for release notes.
 
 ## Usage
 

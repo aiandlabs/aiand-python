@@ -13,7 +13,15 @@ ai& は [docs.aiand.com](https://docs.aiand.com) でもドキュメントを公�
 
 ## インストール
 
-このチェックアウトからインストールする場合:
+```sh
+python -m pip install aiand
+```
+
+現在の SDK バージョンは `0.1.0` です。リリースノートは [CHANGELOG.md](CHANGELOG.md) を参照してください。
+
+### ソースから使う場合
+
+SDK 自体を開発する場合:
 
 ```sh
 cd aiand-python
@@ -26,14 +34,6 @@ python -m pip install -e .
 cd aiand-python
 uv sync --extra test --extra dev
 ```
-
-このパッケージが公開されたら、次のようにインストールします:
-
-```sh
-python -m pip install aiand
-```
-
-現在の SDK バージョンは `0.1.0` です。リリースノートは [CHANGELOG.md](CHANGELOG.md) を参照してください。
 
 ## 使い方
 
