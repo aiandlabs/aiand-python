@@ -48,6 +48,9 @@ Documentation = "https://docs.aiand.com"
 OpenAPI = "https://api.aiand.com/openapi.json"
 Repository = "https://github.com/aiandlabs/aiand-python"
 
+[tool.uv]
+exclude-newer = "7 days"
+
 [tool.setuptools.packages.find]
 include = ["aiand*"]
 
